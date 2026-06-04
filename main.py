@@ -2,8 +2,10 @@ import os
 import time
 import requests
 
-RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
+r = requests.get("https://httpbin.org/get", timeout=20)
 
+print(r.status_code)
+print(r.text[:200])
 url = "https://thai-lotto-new-api.p.rapidapi.com/api/v1/live"
 
 headers = {
