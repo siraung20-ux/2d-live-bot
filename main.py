@@ -1,28 +1,15 @@
 import os
-import time
-import os
 import requests
 
-RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
-
-print("KEY EXISTS:", RAPIDAPI_KEY is not None)
 url = "https://thai-lotto-new-api.p.rapidapi.com/api/v1/live"
 
 headers = {
-    "Content-Type": "application/json",
     "x-rapidapi-host": "thai-lotto-new-api.p.rapidapi.com",
-    "x-rapidapi-key": RAPIDAPI_KEY
+    "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),
+    "User-Agent": "Mozilla/5.0"
 }
 
-for attempt in range(3):
-    try:
-        r = requests.get(url, headers=headers, timeout=20)
+r = requests.get(url, headers=headers, timeout=60)
 
-        print("Status:", r.status_code)
-        print(r.text)
-
-        break
-
-    except Exception as e:
-        print("Attempt", attempt + 1, "failed:", e)
-        time.sleep(5)
+print("STATUS:", r.status_code)
+print(r.text)
