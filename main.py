@@ -1,6 +1,6 @@
 import os
+import time
 import requests
-import json
 
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 
@@ -12,12 +12,15 @@ headers = {
     "x-rapidapi-key": RAPIDAPI_KEY
 }
 
-response = requests.get(url, headers=headers)
+for attempt in range(3):
+    try:
+        r = requests.get(url, headers=headers, timeout=20)
 
-print("Status:", response.status_code)
+        print("Status:", r.status_code)
+        print(r.text)
 
-try:
-    data = response.json()
-    print(json.dumps(data, indent=2))
-except Exception as e:
-    print(response.text)
+        break
+
+    except Exception as e:
+        print("Attempt", attempt + 1, "failed:", e)
+        time.sleep(5)
