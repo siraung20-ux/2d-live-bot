@@ -1,11 +1,11 @@
 import os
 import time
+import os
 import requests
 
-r = requests.get("https://httpbin.org/get", timeout=20)
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 
-print(r.status_code)
-print(r.text[:200])
+print("KEY EXISTS:", RAPIDAPI_KEY is not None)
 url = "https://thai-lotto-new-api.p.rapidapi.com/api/v1/live"
 
 headers = {
