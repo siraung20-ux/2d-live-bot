@@ -1,26 +1,23 @@
 import os
 import requests
+import json
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHANNEL_ID = os.getenv("CHANNEL_ID")
+RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 
-message = """
-🚀 2D Live Bot Online
+url = "https://thai-lotto-new-api.p.rapidapi.com/api/v1/live"
 
-✅ GitHub Actions Connected
-✅ Telegram Connected
-
-Testing Message
-"""
-
-url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-
-payload = {
-    "chat_id": CHANNEL_ID,
-    "text": message
+headers = {
+    "Content-Type": "application/json",
+    "x-rapidapi-host": "thai-lotto-new-api.p.rapidapi.com",
+    "x-rapidapi-key": RAPIDAPI_KEY
 }
 
-r = requests.post(url, json=payload)
+response = requests.get(url, headers=headers)
 
-print("Status:", r.status_code)
-print(r.text)
+print("Status:", response.status_code)
+
+try:
+    data = response.json()
+    print(json.dumps(data, indent=2))
+except Exception as e:
+    print(response.text)
